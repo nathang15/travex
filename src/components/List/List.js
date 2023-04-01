@@ -1,34 +1,17 @@
 import React from 'react';
 import Place from '../Place/Place';
-// import { CircularProgress, Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
 
-function List() {
-    const places = [
-        { name: "Cool place" },
-        { name: "Best Pub" },
-        { name: "Best Steak" },
-        { name: "Cool place" },
-        { name: "Best Pub" },
-        { name: "Best Steak" },
-        { name: "Cool place" },
-        { name: "Best Pub" },
-        { name: "Best Steak" },
-    ]
+function List({ places }) {
 
     return (
-        <div>
+        <div className=''>
             <div className="shadow-lg rounded-lg bg-white p-3 mt-2 ml-5">
-                <div className='font-semibold text-3xl flex'>
+                <div className='font-semibold text-3xl flex justify-center'>
                     Category and Rating
                 </div>
             </div>
-            {/* <Card>
-            <div className='font-semibold text-3xl flex ml-5 mt-2'>
-                Category and Rating
-            </div>
-        </Card> */}
-            <div className="flex justify-end mt-2 ml-5">
+            <div className="flex justify-center mt-2 ml-5">
                 <div className="relative shadow-lg">
                     <select
                         className="block appearance-none w-full bg-white hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline cursor-pointer transition-all"
@@ -74,7 +57,7 @@ function List() {
             </div>
             <div className='shadow-lg rounded-lg bg-white p-3 mt-2 ml-5'>
                 <Grid className='font-semibold text-xl'>
-                    <div className='max-h-screen overflow-y-auto'>
+                    <div className='overflow-y-auto scrollbar-hide' style={{ maxHeight: '75vh'}}>
                         {places?.map((places, i) => (
                             <Grid item key={i} xs={12}>
                                 <div className="mb-20">
