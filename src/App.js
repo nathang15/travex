@@ -11,7 +11,16 @@ export default function App() {
   const [places, setPlaces] = useState([])
 
   const [coordinates, setCoordinates] = useState({ lat: 40.730610, lng: -73.935242 })
-  const [bounds, setBounds] = useState(null)
+  const [bounds, setBounds] = useState({
+    ne: {
+      lat: 0,
+      lng: 0
+    },
+    sw: {
+      lat: 0,
+      lng: 0
+    }
+  })
 
   useEffect(() => {
     getPlacesData(bounds.ne, bounds.sw)
