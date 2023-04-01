@@ -48,7 +48,7 @@ const URL3 = 'https://travel-advisor.p.rapidapi.com/hotels/list-in-boundary'
 
 export const getHotelsData = async (ne, sw) => {
     try {
-        const response = await axios.get(URL2, {
+        const response = await axios.get(URL3, {
             params: {
                 bl_latitude: sw.lat,
                 tr_latitude: ne.lat,

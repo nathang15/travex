@@ -27,15 +27,21 @@ export default function App() {
   useEffect(() => {
     getRestaurantsData(bounds.ne, bounds.sw)
       .then((res) => {
-        setRestaurants(res.data)
+        if (res) {
+          setRestaurants(res.data)
+        }
       })
     getAttractionsData(bounds.ne, bounds.sw)
       .then((res) => {
-        setAttractions(res.data)
+        if (res) {
+          setAttractions(res.data)
+        }
       })
     getHotelsData(bounds.ne, bounds.sw)
       .then((res) => {
-        setHotels(res.data)
+        if (res) {
+          setHotels(res.data)
+        }
       })
   }, [coordinates, bounds])
 
