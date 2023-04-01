@@ -8,7 +8,6 @@ import { getRestaurantsData, getAttractionsData, getHotelsData } from "./api";
 
 
 export default function App() {
-  const [places, setPlaces] = useState([])
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState({});
   const [restaurants, setRestaurants] = useState([])
@@ -22,20 +21,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log(coords, bounds);
-
-
-    getRestaurantsData(bounds.ne, bounds.sw)
-      .then((res) => {
-        setRestaurants(res.data)
-      })
-    getAttractionsData(bounds.ne, bounds.sw)
-      .then((res) => {
-        setAttractions(res.data)
-      })
-    getHotelsData(bounds.sw, bounds.ne).then((data) =>{
-      console.log(data);
-      setHotels(data);
+    getRestaurantsData(bounds.sw, bounds.ne).then((data) => {
+      setRestaurants(data)
+    })
+    getHotelsData(bounds.sw, bounds.ne).then((data) => {
+      setHotels(data)
+    })
+    getAttractionsData(bounds.sw, bounds.ne).then((data) => {
+      setAttractions(data)
     })
   }, [coords, bounds]);
 
@@ -46,7 +39,7 @@ export default function App() {
       <Grid container spacing={3} styles={{ width: '100%' }} >
         <Grid item xs={12} md={4} >
           <main className="flex-grow justify-end ml-6">
-            <List places = {places}/>
+            <List places = {restaurants}/>
           </main>
         </Grid>
         <Grid item xs={12} md={8} >
