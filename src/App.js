@@ -4,13 +4,16 @@ import List from './components/List/List';
 import Helmet from 'react-helmet';
 import Map from "./components/Map";
 import Grid from '@mui/material/Grid';
-import { getPlacesData } from "./api";
+import { getRestaurantsData, getAttractionsData, getHotelsData } from "./api";
 
 
 export default function App() {
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState([])
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState({});
+  const [restaurants, setRestaurants] = useState([])
+  const [attractions, setAttractions] = useState([])
+  const [hotels, setHotels] = useState([])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -22,9 +25,17 @@ export default function App() {
     console.log(coords, bounds);
 
 
-    getPlacesData(bounds.sw, bounds.ne).then((data) =>{
+    getRestaurantsData(bounds.ne, bounds.sw)
+      .then((res) => {
+        setRestaurants(res.data)
+      })
+    getAttractionsData(bounds.ne, bounds.sw)
+      .then((res) => {
+        setAttractions(res.data)
+      })
+    getHotelsData(bounds.sw, bounds.ne).then((data) =>{
       console.log(data);
-      setPlaces(data);
+      setHotels(data);
     })
   }, [coords, bounds]);
 
