@@ -39,7 +39,7 @@ export default function App() {
       <Grid container spacing={3} styles={{ width: '100%' }} >
         <Grid item xs={12} md={4} >
           <main className="flex-grow justify-end ml-6">
-            <List places = {restaurants}/>
+            <List places = {hotels}/>
           </main>
         </Grid>
         <Grid item xs={12} md={8} >
