@@ -1,18 +1,6 @@
-// import React from 'react';
-// import { Autocomplete } from '@react-google-maps/api';
-
-// function Header() {
-//   return (
-//     <div>
-//         Header
-//     </div>
-//   )
-// }
-
-// export default Header
 import {
-    SearchIcon,
-  } from "@heroicons/react/outline"; 
+  SearchIcon,
+} from "@heroicons/react/outline";
 import React, { useState } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
 
@@ -39,7 +27,7 @@ function Header() {
           Travex
         </div>
       </div>
-      
+
       <div className="flex items-center justify-end flex-grow">
         <div className="hidden md:inline-flex ml-2 items-center rounded-full bg-gray-100 p-2">
           <SearchIcon className="h-6 text-gray-600" />
