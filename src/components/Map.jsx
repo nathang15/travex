@@ -17,7 +17,8 @@ const Map = () => {
                 bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
                 defaultCenter={defaultProps.center}
                 defaultZoom={defaultProps.zoom}
-                geta
+                margin={[50, 50, 50, 50]}
+
             >
                 <PinnedPoint
                     lat={40.2026}
