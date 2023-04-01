@@ -4,11 +4,13 @@ import List from './components/List/List';
 import Helmet from 'react-helmet';
 import Map from "./components/Map";
 import Grid from '@mui/material/Grid';
-import { getPlacesData } from "./api";
+import { getRestaurantsData, getAttractionsData, getHotelsData } from "./api";
 
 
 export default function App() {
-  const [places, setPlaces] = useState([])
+  const [restaurants, setRestaurants] = useState([])
+  const [attractions, setAttractions] = useState([])
+  const [hotels, setHotels] = useState([])
 
   const [coordinates, setCoordinates] = useState({ lat: 40.730610, lng: -73.935242 })
   const [bounds, setBounds] = useState({
@@ -23,9 +25,17 @@ export default function App() {
   })
 
   useEffect(() => {
-    getPlacesData(bounds.ne, bounds.sw)
+    getRestaurantsData(bounds.ne, bounds.sw)
       .then((res) => {
-        setPlaces(res.data)
+        setRestaurants(res.data)
+      })
+    getAttractionsData(bounds.ne, bounds.sw)
+      .then((res) => {
+        setAttractions(res.data)
+      })
+    getHotelsData(bounds.ne, bounds.sw)
+      .then((res) => {
+        setHotels(res.data)
       })
   }, [coordinates, bounds])
 
