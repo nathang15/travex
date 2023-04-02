@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import Place from '../Place/Place';
 import Grid from '@mui/material/Grid';
+import useStyles from './styles.js';
+import { CircularProgress } from '@mui/material';
 
-function List({ places }) {
+function List({ places, childClicked, isLoading, type, setType, rating, setRating}) {
+    const [elRefs, setElRefs] = useState([]);
+    const classes = useStyles();
+    useEffect(() => {
+        setElRefs((refs) => Array(places?.length).fill().map((_, i) => refs[i] || createRef()));
+      }, [places]);
+    console.log({childClicked})
 
     return (
         <div className=''>
@@ -11,9 +19,16 @@ function List({ places }) {
                     Category and Rating
                 </div>
             </div>
+            {isLoading ? (
+                    <div className={classes.loading}>
+                        <CircularProgress size="5rem"/>
+                    </div>
+                ) : (
+                    <>
             <div className="flex justify-center mt-2 ml-5">
                 <div className="relative shadow-lg">
                     <select
+                        id="type" value={type} onChange={(e) => setType(e.target.value)}
                         className="block appearance-none w-full bg-white hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline cursor-pointer transition-all"
                     >
                         <option value="attractions">Tourists</option>
@@ -34,6 +49,7 @@ function List({ places }) {
                 </div>
                 <div className="ml-2 relative shadow-lg">
                     <select
+                        id="rating" value={rating} onChange={(e) => setRating(e.target.value)}
                         className="block appearance-none w-full bg-white hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none cursor-pointer"
                     >
                         <option value="">All</option>
@@ -59,16 +75,17 @@ function List({ places }) {
                 <Grid className='font-semibold text-xl'>
                     <div className='overflow-y-auto scrollbar-hide' style={{ maxHeight: '75vh'}}>
                         {places?.map((places, i) => (
-                            <Grid item key={i} xs={12}>
+                            <Grid ref={elRefs[i]} item key={i} xs={12}>
                                 <div className="mb-20">
-                                    <Place places={places} />
+                                    <Place places={places} selected={Number(childClicked) === i} refProp={elRefs[i]}/>
                                 </div>
                             </Grid>
                         ))}
                     </div>
                 </Grid>
             </div>
-
+            </>
+            )}
         </div>
     );
 }

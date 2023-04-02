@@ -1,12 +1,11 @@
 import { Card, Box, Typography, Chip, Button, CardActions } from '@mui/material'
 import { CardMedia } from '@mui/material'
 import React from 'react'
-import Rating from '@mui/material'
 import { LocationOn } from '@mui/icons-material'
 import { Phone } from '@mui/icons-material'
-
-function Place({ places }) {
-
+import Rating from '@mui/lab/Rating';
+function Place({ places, selected, refProp }) {
+  if (selected) refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   if (!places.name) {
     return null; // Do not render anything if name property is missing
   }
@@ -28,6 +27,12 @@ function Place({ places }) {
           <div className='font-normal text-sm'>Price</div>
           <div className='font-normal text-sm' gutterBottom variant="subtitle1">
             {places.price_level}
+          </div>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Rating name="read-only" value={Number(places.rating)} readOnly />
+          <div className='font-normal text-sm' gutterBottom variant="subtitle1">
+            {places.num_reviews} reviews
           </div>
         </Box>
         <Box display="flex" justifyContent="space-between">

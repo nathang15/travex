@@ -4,16 +4,18 @@ import List from './components/List/List';
 import Helmet from 'react-helmet';
 import Map from "./components/Map";
 import Grid from '@mui/material/Grid';
-import { getRestaurantsData, getAttractionsData, getHotelsData } from "./api";
+import { getPlacesData } from "./api";
 
 
 export default function App() {
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState({});
-  const [restaurants, setRestaurants] = useState([])
-  const [attractions, setAttractions] = useState([])
-  const [hotels, setHotels] = useState([])
-
+  const [places, setPlaces] = useState([])
+  const [childClicked, setChildClicked] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [type, setType] = useState('attractions');
+  const [rating, setRating] = useState('all');
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       setCoords({ lat: latitude, lng: longitude });
@@ -21,16 +23,19 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    getRestaurantsData(bounds.sw, bounds.ne).then((data) => {
-      setRestaurants(data)
+    const filtered = places.filter((place) => Number(place.rating) > rating);
+
+    setFilteredPlaces(filtered);
+  }, [rating]);
+
+  useEffect(() => {
+    setIsLoading(true)
+    getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
+      setPlaces(data)
+      setFilteredPlaces([]);
+      setIsLoading(false)
     })
-    getHotelsData(bounds.sw, bounds.ne).then((data) => {
-      setHotels(data)
-    })
-    getAttractionsData(bounds.sw, bounds.ne).then((data) => {
-      setAttractions(data)
-    })
-  }, [coords, bounds]);
+  }, [type, coords, bounds]);
 
   return (
     <div className="">
@@ -39,7 +44,14 @@ export default function App() {
       <Grid container spacing={3} styles={{ width: '100%' }} >
         <Grid item xs={12} md={4} >
           <main className="flex-grow justify-end ml-6">
-            <List places = {hotels}/>
+            <List places = {filteredPlaces.length ? filteredPlaces : places}
+            childClicked={childClicked}
+            isLoading={isLoading}
+            type={type}
+            setType={setType}
+            rating={rating}
+            setRating={setRating}/>
+            
           </main>
         </Grid>
         <Grid item xs={12} md={8} >
@@ -47,7 +59,8 @@ export default function App() {
             setCoords={setCoords}
             setBounds={setBounds}
             coords={coords}
-            // places={places}
+            places={filteredPlaces.length ? filteredPlaces : places}
+            setChildClicked={setChildClicked}            
           />
         </Grid>
       </Grid>
