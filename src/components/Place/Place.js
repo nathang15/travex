@@ -22,17 +22,16 @@ function Place({ places, selected, refProp }) {
         <div className='mt-2'>
           {places.name}
         </div>
-
-        <Box display="flex" justifyContent="space-between">
-          <div className='font-normal text-sm'>Price</div>
-          <div className='font-normal text-sm' gutterBottom variant="subtitle1">
-            {places.price_level}
-          </div>
-        </Box>
         <Box display="flex" justifyContent="space-between">
           <Rating name="read-only" value={Number(places.rating)} readOnly />
           <div className='font-normal text-sm' gutterBottom variant="subtitle1">
             {places.num_reviews} reviews
+          </div>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <div className='font-normal text-sm'>Price</div>
+          <div className='font-normal text-sm' gutterBottom variant="subtitle1">
+            {places.price_level}
           </div>
         </Box>
         <Box display="flex" justifyContent="space-between">
