@@ -9,7 +9,8 @@ import Profile from "../Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-function Header({setCoords}) {
+function Header({setCoords, weatherData}) {
+  console.log(weatherData);
   const [autocomplete, setAutocomplete] = useState(null);
   const { isAuthenticated } = useAuth0();
   const onLoad = (autocomplete) => {
@@ -41,6 +42,18 @@ function Header({setCoords}) {
           </div>
         </div>
       </Autocomplete>
+      {/* <div>
+          {weatherData && (
+            <div className="flex items-center">
+              <img
+                className="h-6 w-6 mr-1"
+                src={`https://www.weatherbit.io/static/img/icons/${weatherData.weather.icon}.png`}
+                alt="Weather icon"
+              />
+              <span className="text-sm">{Math.round(weatherData.temp)}°C</span>
+            </div>
+          )}
+        </div> */}
       <div className="flex items-center justify-end flex-grow gap-2">
         <div>
           <Profile/>

@@ -4,10 +4,11 @@ import List from './components/List/List';
 import Helmet from 'react-helmet';
 import Map from "./components/Map";
 import Grid from '@mui/material/Grid';
-import { getPlacesData } from "./api";
+import { getPlacesData, getWeatherData } from "./api";
 
 
 export default function App() {
+  const [weatherData, setWeatherData] = useState([])
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState({});
   const [places, setPlaces] = useState([])
@@ -31,6 +32,10 @@ export default function App() {
   useEffect(() => {
     if(bounds.sw && bounds.ne) {
       setIsLoading(true)
+      getWeatherData(coords.lat, coords.lng).then((data) => {
+        setWeatherData(data)
+        setIsLoading(false)
+      });
       getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
       setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
       setFilteredPlaces([]);
@@ -42,7 +47,7 @@ export default function App() {
   return (
     <div className="">
       <Helmet bodyAttributes={{ style: 'background-color : #F3F4F6' }} />
-      <Header setCoords={setCoords}/>
+      <Header setCoords={setCoords} weatherData={weatherData}/>
       <Grid container spacing={3} styles={{ width: '100%' }} >
         <Grid item xs={12} md={4} >
           <main className="flex-grow justify-end ml-6">
