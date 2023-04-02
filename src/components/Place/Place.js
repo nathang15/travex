@@ -72,11 +72,11 @@ function Place({ places, selected, refProp }) {
           </Box>
         )}
 
-        <CardActions className=''>
-          <Button size="small" color="primary" onClick={() => window.open(places.web_url, '_blank')}>
+        <CardActions className='flex gap-1'>
+          <Button className='bg-gray-100 shadow-md rounded-md p-2' size="small" color="primary" onClick={() => window.open(places.web_url, '_blank')}>
             Trip Advisor
           </Button>
-          <Button size="small" color="primary" onClick={() => window.open(places.website, '_blank')}>
+          <Button className='bg-gray-100 shadow-md rounded-md p-2' size="small" color="primary" onClick={() => window.open(places.website, '_blank')}>
             Website
           </Button>
       </CardActions>      

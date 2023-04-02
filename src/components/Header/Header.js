@@ -3,10 +3,15 @@ import {
 } from "@heroicons/react/outline";
 import React, { useState } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
+import LoginButton from "../Login";
+import LogoutButton from "../Logout";
+import Profile from "../Profile";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 function Header({setCoords}) {
   const [autocomplete, setAutocomplete] = useState(null);
-
+  const { isAuthenticated } = useAuth0();
   const onLoad = (autocomplete) => {
     setAutocomplete(autocomplete);
   };
@@ -31,11 +36,22 @@ function Header({setCoords}) {
             <SearchIcon className="h-6 text-gray-600" />
             <input
               className="hidden lg:inline-flex ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink"
-              placeholder="Search Stuffs"
+              placeholder="Explore Location"
             />
           </div>
         </div>
       </Autocomplete>
+      <div className="flex items-center justify-end flex-grow gap-2">
+        <div>
+          <Profile/>
+        </div>
+        {isAuthenticated ? (
+        <LogoutButton/>
+        ) : (
+          <LoginButton/>
+        )}
+      </div>
+      
     </header>
   );
 }
