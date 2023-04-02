@@ -29,18 +29,20 @@ export default function App() {
   }, [rating]);
 
   useEffect(() => {
-    setIsLoading(true)
-    getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
-      setPlaces(data)
+    if(bounds.sw && bounds.ne) {
+      setIsLoading(true)
+      getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
+      setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
       setFilteredPlaces([]);
       setIsLoading(false)
-    })
-  }, [type, coords, bounds]);
+      })
+    }   
+  }, [type, bounds]);
 
   return (
     <div className="">
       <Helmet bodyAttributes={{ style: 'background-color : #F3F4F6' }} />
-      <Header />
+      <Header setCoords={setCoords}/>
       <Grid container spacing={3} styles={{ width: '100%' }} >
         <Grid item xs={12} md={4} >
           <main className="flex-grow justify-end ml-6">
