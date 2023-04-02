@@ -27,7 +27,7 @@ function Header({setCoords, weatherData}) {
   return (
     <header className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 px-4 shadow-md">
       <div className="flex">
-        <div className="font-bold text-3xl">
+        <div className="font-bold text-3xl cursor-pointer" onClick={() => window.location.reload()}>
           Travex
         </div>
       </div>
